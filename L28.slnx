@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="L28/L28.csproj" />
+  <Project Path="random/random.csproj" Id="6538c8ff-a9c5-4370-a1b9-7176a9c65795" />
+  <Project Path="WinFormsApp1/WinFormsApp1.csproj" Id="a1c43fa2-e2e2-4ee0-9f39-959fe65307f4" />
+</Solution>
