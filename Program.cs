@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Security.Cryptography;
 
@@ -97,15 +97,20 @@ namespace random
             }
         }
 
+        public static void WaitForRestart()
+        {
+            Console.Write($"\nTo restart the program, press Enter...");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
         static void Main(string[] args)
         {
             while (true)
             {
                 GetLength(out int passLength);
                 CreatePassword(passLength);
-                Console.Write($"\nTo restart the program, press Enter...");
-                Console.ReadKey();
-                Console.Clear();
+                WaitForRestart();
             }
         }
     }
