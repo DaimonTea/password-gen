@@ -5,8 +5,10 @@ using System.Text;
 
 namespace password_generator
 {
+    /// <summary>Contains frequently used custom methods.</summary>
     public class BasicScripts
     {
+        /// <summary>Requires string value as a condition displayed to user and creates int value containing the parsed input.</summary>
         public static void ParseStringToInt(in string advice, out int number)
         {
             while (true)
@@ -46,6 +48,8 @@ namespace password_generator
             BasicScripts.ParseStringToInt("Specify the password length: ", out length);
         }
 
+        /// <summary>Forcefully creates a string character or a string number depending on the conditions (forceSymbol == 1 - number, 2 - letter).</summary>
+        /// <returns>A string value that becomes a part of the password.</returns>
         public static string ForceSymbolGen(in int forceSymbol)
         {
             char passChar = (char)0;
@@ -67,6 +71,8 @@ namespace password_generator
             }
         }
 
+        /// <summary>Generates a random character that can either be a string letter or a string number.</summary>
+        /// <returns>A string value that becomes a part of the password.</returns>
         public static string GenerateChar(in int forceSymbol, out bool isStr)
         {
             char passChar = (char)0;
@@ -95,6 +101,7 @@ namespace password_generator
             }
         }
 
+        /// <summary>Creates a string value containing the password and displays it.</summary>
         public static void CreatePassword(in int passLength)
         {
             prevIsStr = true;
