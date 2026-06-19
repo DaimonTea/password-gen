@@ -3,10 +3,15 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace random
+namespace password_generator
 {
     class Program
     {
+        static readonly string alphabet = "abcdefghijklmnopqrstuvwxyz";
+        static readonly string numbers = "0123456789";
+        static bool isStr, prevIsStr;
+        static int forceSymbol;
+
         public static void GetLength(out int length)
         {
             do
@@ -24,8 +29,6 @@ namespace random
         public static string ForceSymbolGen(in int forceSymbol)
         {
             char passChar = (char)0;
-            string alphabet = "abcdefghijklmnopqrstuvwxyz";
-            string numbers = "0123456789";
             if (forceSymbol == 1)
             {
                 int index = RandomNumberGenerator.GetInt32(0, numbers.Length);
@@ -47,8 +50,6 @@ namespace random
         public static string GenerateChar(in int forceSymbol, out bool isStr)
         {
             char passChar = (char)0;
-            string alphabet = "abcdefghijklmnopqrstuvwxyz";
-            string numbers = "0123456789";
             if (forceSymbol != 0)
             {
                 isStr = forceSymbol == 2 ? true : false;
@@ -76,8 +77,8 @@ namespace random
 
         public static void CreatePassword(in int passLength)
         {
-            bool isStr, prevIsStr = true;
-            int patience = 0, forceSymbol = 0;
+            prevIsStr = true;
+            int patience = 0;
             StringBuilder generatedPassword = new StringBuilder(passLength);
             Console.Clear();
             Console.Write($"Your unique password: ");
