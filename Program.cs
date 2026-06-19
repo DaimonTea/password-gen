@@ -5,6 +5,35 @@ using System.Text;
 
 namespace password_generator
 {
+    public class BasicScripts
+    {
+        public static void ParseStringToInt(in string advice, out int number)
+        {
+            while (true)
+            {
+                Console.Write($"{advice}");
+                string str = Console.ReadLine();
+                if (int.TryParse(str, out number))
+                {
+                    Console.Clear();
+                    return;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.Write($"Incorrect input.\n");
+                }
+            }
+        }
+
+        public static void WaitForRestart()
+        {
+            Console.Write($"\nTo restart the program, press Enter...");
+            Console.ReadKey();
+            Console.Clear();
+        }
+    }
+
     class Program
     {
         static readonly string alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -14,16 +43,7 @@ namespace password_generator
 
         public static void GetLength(out int length)
         {
-            do
-            {
-                Console.Write($"Specify the password length: ");
-                if (int.TryParse(Console.ReadLine(), out length))
-                {
-                    return;
-                }
-                Console.Clear();
-                Console.Write($"Incorrect value.\n");
-            } while (true);
+            BasicScripts.ParseStringToInt("Specify the password length: ", out length);
         }
 
         public static string ForceSymbolGen(in int forceSymbol)
@@ -101,20 +121,13 @@ namespace password_generator
             Console.Write(generatedPassword);
         }
 
-        public static void WaitForRestart()
-        {
-            Console.Write($"\nTo restart the program, press Enter...");
-            Console.ReadKey();
-            Console.Clear();
-        }
-
         static void Main(string[] args)
         {
             while (true)
             {
                 GetLength(out int passLength);
                 CreatePassword(passLength);
-                WaitForRestart();
+                BasicScripts.WaitForRestart();
             }
         }
     }
