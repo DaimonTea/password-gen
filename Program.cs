@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace random
 {
@@ -77,12 +78,13 @@ namespace random
         {
             bool isStr, prevIsStr = true;
             int patience = 0, forceSymbol = 0;
+            StringBuilder generatedPassword = new StringBuilder(passLength);
             Console.Clear();
             Console.Write($"Your unique password: ");
             forceSymbol = 0;
             for (int i = 0; i < passLength; i++)
             {
-                Console.Write($"{GenerateChar(forceSymbol, out isStr)}");
+                generatedPassword.Append(GenerateChar(forceSymbol, out isStr));
                 forceSymbol = 0;
                 if (isStr == prevIsStr)
                 {
@@ -95,6 +97,7 @@ namespace random
                 }
                 prevIsStr = isStr;
             }
+            Console.Write(generatedPassword);
         }
 
         public static void WaitForRestart()
