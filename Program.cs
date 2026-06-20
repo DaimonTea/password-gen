@@ -20,14 +20,14 @@ namespace password_generator
 
         /// <summary>Forcefully creates a string character or a string number depending on the conditions (forceSymbol == 1 - number, 2 - letter).</summary>
         /// <returns>A string value that becomes a part of the password.</returns>
-        public static string ForceSymbolGen(in int forceSymbol)
+        public static char ForceSymbolGen(in int forceSymbol)
         {
             char passChar = (char)0;
             if (forceSymbol == 1)
             {
                 int index = RandomNumberGenerator.GetInt32(0, numbers.Length);
                 passChar = numbers[index];
-                return passChar.ToString();
+                return passChar;
             }
             else
             {
@@ -35,15 +35,15 @@ namespace password_generator
                 passChar = alphabet[index];
                 if (RandomNumberGenerator.GetInt32(0, 2) == 1)
                 {
-                    return passChar.ToString().ToUpper();
+                    return Char.ToUpper(passChar);
                 }
-                return passChar.ToString();
+                return passChar;
             }
         }
 
         /// <summary>Generates a random character that can either be a string letter or a string number.</summary>
         /// <returns>A string value that becomes a part of the password.</returns>
-        public static string GenerateChar(in int forceSymbol, out bool isStr)
+        public static char GenerateChar(in int forceSymbol, out bool isStr)
         {
             char passChar = (char)0;
             if (forceSymbol != 0)
@@ -56,7 +56,7 @@ namespace password_generator
                 int index = RandomNumberGenerator.GetInt32(0, numbers.Length);
                 passChar = numbers[index];
                 isStr = false;
-                return passChar.ToString();
+                return passChar;
             }
             else
             {
@@ -65,9 +65,9 @@ namespace password_generator
                 isStr = true;
                 if (RandomNumberGenerator.GetInt32(0, 2) == 1)
                 {
-                    return passChar.ToString().ToUpper();
+                    return Char.ToUpper(passChar);
                 }
-                return passChar.ToString();
+                return passChar;
             }
         }
 
