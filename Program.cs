@@ -11,78 +11,91 @@ namespace password_generator
         static readonly string alphabet = "abcdefghijklmnopqrstuvwxyz";
         static readonly string numbers = "0123456789";
         static bool isStr, prevIsStr;
-        static int forceSymbol;
+        static byte forceSymbol;
 
         public static void GetLength(out int length)
         {
             CustomParsing.ParseString("Specify the password length: ", out length);
         }
 
+        public static char CreateChar(in string choice)
+        {
+            int index;
+            char passChar;
+            switch (choice)
+            {
+                case "number":
+                    index = RandomNumberGenerator.GetInt32(0, numbers.Length);
+                    passChar = numbers[index];
+                    break;
+                case "letter":
+                    index = RandomNumberGenerator.GetInt32(0, alphabet.Length);
+                    passChar = alphabet[index];
+                    break;
+                default:
+                    passChar = (char)0;
+                    break;
+            }
+            return passChar;
+        }
+
         /// <summary>Forcefully creates a string character or a string number depending on the conditions (forceSymbol == 1 - number, 2 - letter).</summary>
         /// <returns>A string value that becomes a part of the password.</returns>
-        public static char ForceSymbolGen(in int forceSymbol)
+        public static char ForceChar(in int forceSymbol)
         {
             char passChar = (char)0;
             if (forceSymbol == 1)
             {
-                int index = RandomNumberGenerator.GetInt32(0, numbers.Length);
-                passChar = numbers[index];
-                return passChar;
+                passChar = CreateChar("number");
             }
             else
             {
-                int index = RandomNumberGenerator.GetInt32(0, alphabet.Length);
-                passChar = alphabet[index];
+                passChar = CreateChar("letter");
                 if (RandomNumberGenerator.GetInt32(0, 2) == 1)
                 {
                     return Char.ToUpper(passChar);
                 }
-                return passChar;
             }
+            return passChar;
         }
 
         /// <summary>Generates a random character that can either be a string letter or a string number.</summary>
         /// <returns>A string value that becomes a part of the password.</returns>
-        public static char GenerateChar(in int forceSymbol, out bool isStr)
+        public static char ConfigureChar(in int forceSymbol, out bool isStr)
         {
             char passChar = (char)0;
             if (forceSymbol != 0)
             {
                 isStr = forceSymbol == 2 ? true : false;
-                return ForceSymbolGen(forceSymbol);
+                return ForceChar(forceSymbol);
             }
             if (RandomNumberGenerator.GetInt32(0, 2) == 0)
             {
-                int index = RandomNumberGenerator.GetInt32(0, numbers.Length);
-                passChar = numbers[index];
+                passChar = CreateChar("number");
                 isStr = false;
-                return passChar;
             }
             else
             {
-                int index = RandomNumberGenerator.GetInt32(0, alphabet.Length);
-                passChar = alphabet[index];
+                passChar = CreateChar("letter");
                 isStr = true;
                 if (RandomNumberGenerator.GetInt32(0, 2) == 1)
                 {
                     return Char.ToUpper(passChar);
                 }
-                return passChar;
             }
+            return passChar;
         }
 
         /// <summary>Creates a string value containing the password and displays it.</summary>
         public static void CreatePassword(in int passLength)
         {
             prevIsStr = true;
-            int patience = 0;
+            byte patience = (byte)0;
             StringBuilder generatedPassword = new StringBuilder(passLength);
             Console.Clear();
-            Console.Write($"Your unique password: ");
-            forceSymbol = 0;
             for (int i = 0; i < passLength; i++)
             {
-                generatedPassword.Append(GenerateChar(forceSymbol, out isStr));
+                generatedPassword.Append(ConfigureChar(forceSymbol, out isStr));
                 forceSymbol = 0;
                 if (isStr == prevIsStr)
                 {
@@ -90,12 +103,12 @@ namespace password_generator
                 }
                 if (patience >= 1)
                 {
-                    forceSymbol = isStr ? 1 : 2;
+                    forceSymbol = isStr ? (byte)1 : (byte)2;
                     patience = 0;
                 }
                 prevIsStr = isStr;
             }
-            Console.Write(generatedPassword);
+            Console.Write($"Your unique password: {generatedPassword}");
         }
 
         static void Main(string[] args)
