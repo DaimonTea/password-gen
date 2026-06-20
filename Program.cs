@@ -2,40 +2,10 @@ using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using CommonScripts;
 
 namespace password_generator
 {
-    /// <summary>Contains frequently used custom methods.</summary>
-    public class BasicScripts
-    {
-        /// <summary>Requires string value as a condition displayed to user and creates int value containing the parsed input.</summary>
-        public static void ParseStringToInt(in string advice, out int number)
-        {
-            while (true)
-            {
-                Console.Write($"{advice}");
-                string str = Console.ReadLine();
-                if (int.TryParse(str, out number))
-                {
-                    Console.Clear();
-                    return;
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.Write($"Incorrect input.\n");
-                }
-            }
-        }
-
-        public static void WaitForRestart()
-        {
-            Console.Write($"\nTo restart the program, press Enter...");
-            Console.ReadKey();
-            Console.Clear();
-        }
-    }
-
     class Program
     {
         static readonly string alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -45,7 +15,7 @@ namespace password_generator
 
         public static void GetLength(out int length)
         {
-            BasicScripts.ParseStringToInt("Specify the password length: ", out length);
+            CustomParsing.ParseString("Specify the password length: ", out length);
         }
 
         /// <summary>Forcefully creates a string character or a string number depending on the conditions (forceSymbol == 1 - number, 2 - letter).</summary>
@@ -134,7 +104,7 @@ namespace password_generator
             {
                 GetLength(out int passLength);
                 CreatePassword(passLength);
-                BasicScripts.WaitForRestart();
+                CommonTools.Wait();
             }
         }
     }
